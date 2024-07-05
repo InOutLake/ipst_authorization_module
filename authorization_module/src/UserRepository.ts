@@ -1,7 +1,7 @@
 import { db } from './database';
-import { UserUpdate, NewUser, User } from './types';
+import { UserUpdate, NewUser, User } from './types/types';
 
-export async function createPerson(user: NewUser) {
+export async function createUser(user: NewUser) {
   return await db
     .insertInto('User')
     .values(user)

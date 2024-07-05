@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateUser = exports.userSchema = void 0;
+exports.passwordSchema = exports.validatePassword = exports.validateUser = exports.userSchema = void 0;
 const joi_1 = __importDefault(require("joi"));
 const userSchema = joi_1.default.object({
     name: joi_1.default.string().min(2).max(255).required(),
@@ -17,6 +17,10 @@ const userSchema = joi_1.default.object({
     is_confirmed: joi_1.default.boolean().default(false)
 });
 exports.userSchema = userSchema;
+const passwordSchema = joi_1.default.string()
+    .pattern(new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'))
+    .required();
+exports.passwordSchema = passwordSchema;
 const validateUser = (user) => {
     const { error } = userSchema.validate(user);
     if (error) {
@@ -24,3 +28,10 @@ const validateUser = (user) => {
     }
 };
 exports.validateUser = validateUser;
+const validatePassword = (password) => {
+    const { error } = passwordSchema.validate(password);
+    if (error) {
+        throw new Error('Password validation failed');
+    }
+};
+exports.validatePassword = validatePassword;

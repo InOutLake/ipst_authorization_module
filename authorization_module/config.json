@@ -10,6 +10,7 @@
   },
   "jwt": 
   {
-    "secret": "secret"
+    "acessSsecret": "some_secret",
+    "refreshSecret": "some_other_secret"
   }
 }

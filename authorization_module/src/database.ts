@@ -1,4 +1,4 @@
-import { Database } from './types';
+import { Database } from './types/types';
 import { Pool } from 'pg';
 import { Kysely, PostgresDialect } from 'kysely';
 import { config } from './config';

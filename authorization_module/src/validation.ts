@@ -17,6 +17,12 @@ const userSchema = Joi.object({
   is_confirmed: Joi.boolean().default(false)
 });
 
+const passwordSchema = Joi.string()
+  .pattern(
+    new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')
+  )
+  .required();
+
 const validateUser = (user: User): void => {
   const { error } = userSchema.validate(user);
   if (error) {
@@ -24,4 +30,11 @@ const validateUser = (user: User): void => {
   }
 };
 
-export { userSchema, validateUser };
+const validatePassword = (password: string): void => {
+  const { error } = passwordSchema.validate(password);
+  if (error) {
+    throw new Error('Password validation failed');
+  }
+};
+
+export { userSchema, validateUser, validatePassword, passwordSchema };

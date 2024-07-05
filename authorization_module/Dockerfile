@@ -13,5 +13,7 @@ RUN npm install
 COPY . .
 
 EXPOSE 8000
+EXPOSE 9229
 
-CMD node build/index.js
+# TODO should do it with npm
+CMD npm run start:dev
