@@ -1,16 +1,16 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import { config } from './config';
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { config } from "./config";
 
-const accessSecret = config.jwt.acessSecret;
+const accessSecret = config.jwt.accessSecret;
 const refreshSecret = config.jwt.refreshSecret;
 
 export function generateAccessToken(userId: number) {
-  return jwt.sign({ userId: userId }, accessSecret, { expiresIn: '1h' });
+  return jwt.sign({ userId: userId }, accessSecret, { expiresIn: "1h" });
 }
 
 export function generateRefreshToken(userId: number) {
   return jwt.sign({ userId: userId }, refreshSecret, {
-    expiresIn: '1d'
+    expiresIn: "1d",
   });
 }
 

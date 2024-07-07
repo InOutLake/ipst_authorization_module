@@ -1,6 +1,0 @@
-{
-    "watch": ["src"],
-    "ext": ".ts,.js",
-    "ignore": [],
-    "exec": "npx --inspect=0.0.0.0:9229 --nolazy ts-node src/index.ts"
-}

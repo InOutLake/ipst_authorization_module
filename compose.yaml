@@ -1,16 +1,16 @@
+version: '3'
 services:
   authorization_module:
     build:
       context: ./authorization_module
-      dockerfile: Dockerfile
-    ports:
-      - 8000:8000
-      - 9229:9229
     depends_on:
       - db
+    ports:
+      - 80:8000
+      - 9229:9229
     volumes:
-      - ./authorization_module/build:/usr/src/app/build
       - ./authorization_module/src:/usr/src/app/src
+
   db:
     image: postgres:latest
     environment:

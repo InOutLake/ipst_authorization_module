@@ -6,8 +6,7 @@
       "request": "attach",
       "name": "Node Docker",
       "port": 9229,
-      "restart": true,
-      "localRoot": "${workspaceFolder}",
+      "localRoot": "${workspaceFolder}/authorization_module",
       "remoteRoot": "/usr/src/app"
     }
   ]

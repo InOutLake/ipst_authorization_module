@@ -1,19 +1,15 @@
-# syntax=docker/dockerfile:1
-ARG NODE_VERSION=20.13.1
-FROM node:${NODE_VERSION}-alpine
-
-ENV NODE_ENV production
+FROM node:16
 
 WORKDIR /usr/src/app
 
-COPY package*.json .
+COPY package*.json ./
+COPY tsconfig.json ./
+COPY ./src ./src
+COPY ./views ./views
+COPY config.json ./
 
 RUN npm install
 
-COPY . .
+EXPOSE 80
 
-EXPOSE 8000
-EXPOSE 9229
-
-# TODO should do it with npm
-CMD npm run start:dev
+CMD yarn nodemon --signal SIGINT --legacy-watch --inspect-brk=0.0.0.0:9229 --nolazy src/index.ts
