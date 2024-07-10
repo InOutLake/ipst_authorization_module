@@ -1,0 +1,136 @@
+openapi: 3.1.0
+info:
+  title: IPST Authorization Module API
+  version: 1.0.0
+  description: API documentation for IPST Authorization Module
+servers:
+  - url: http://localhost:80
+paths:
+  /register:
+    get:
+      summary: Display the registration form
+      responses:
+        "200":
+          description: Successful response
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                surname:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                middlename:
+                  type: string
+                username:
+                  type: string
+      responses:
+        "200":
+          description: Registration successful, check email for confirmation
+        "400":
+          description: Bad request
+  /confirm_user/{token}:
+    get:
+      summary: Confirm user registration
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User confirmed
+        "400":
+          description: Invalid token
+  /password:
+    get:
+      summary: Display the password reset form
+      responses:
+        "200":
+          description: Successful response
+          content:
+            text/html:
+              schema:
+                type: string
+  /confirm_password/{token}:
+    post:
+      summary: Reset user password
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Password reset successful
+        "400":
+          description: Invalid token or password validation failed
+  /login:
+    get:
+      summary: Display the login form
+      responses:
+        "200":
+          description: Successful response
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      summary: Authenticate user
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Authentication successful
+        "400":
+          description: Invalid credentials
+  /:
+    get:
+      summary: Protected route
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            text/plain:
+              schema:
+                type: string
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    in: header
+    name: Authorization

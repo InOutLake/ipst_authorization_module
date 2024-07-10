@@ -10,6 +10,7 @@ services:
       - 9229:9229
     volumes:
       - ./authorization_module/src:/usr/src/app/src
+      - ./authorization_module/views:/usr/src/app/views
 
   db:
     image: postgres:latest

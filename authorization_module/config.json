@@ -12,5 +12,15 @@
   {
     "accessSecret": "some_secret",
     "refreshSecret": "some_other_secret"
+  },
+  "email": 
+  {
+    "email": "example@example.ex",
+    "password": "pwd"
+  },
+  "server":
+  {
+    "host": "localhost",
+    "port": 80
   }
 }

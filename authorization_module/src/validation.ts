@@ -1,5 +1,34 @@
-import Joi from 'joi';
-import { User } from './models';
+import Joi from "joi";
+
+class User {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+  is_confirmed: boolean;
+  middlename?: string;
+  username?: string;
+
+  constructor(
+    name: string,
+    surname: string,
+    email: string,
+    password: string,
+    is_confirmed: boolean = false,
+    middlename?: string,
+    username?: string
+  ) {
+    this.name = name;
+    this.surname = surname;
+    this.middlename = middlename;
+    this.email = email;
+    this.username = username;
+    this.password = password;
+    this.is_confirmed = is_confirmed;
+  }
+}
+
+export { User };
 
 const userSchema = Joi.object({
   name: Joi.string().min(2).max(255).required(),
@@ -10,30 +39,30 @@ const userSchema = Joi.object({
   password: Joi.string()
     .pattern(
       new RegExp(
-        '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
+        "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
       )
     )
     .required(),
-  is_confirmed: Joi.boolean().default(false)
+  is_confirmed: Joi.boolean().default(false),
 });
 
 const passwordSchema = Joi.string()
   .pattern(
-    new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')
+    new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
   )
   .required();
 
 const validateUser = (user: User): void => {
   const { error } = userSchema.validate(user);
   if (error) {
-    throw new Error('User validation failed');
+    throw new Error("User validation failed");
   }
 };
 
 const validatePassword = (password: string): void => {
   const { error } = passwordSchema.validate(password);
   if (error) {
-    throw new Error('Password validation failed');
+    throw new Error("Password validation failed");
   }
 };
 

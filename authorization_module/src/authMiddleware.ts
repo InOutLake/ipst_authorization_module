@@ -14,13 +14,17 @@ export async function authMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  console.log("Auth middleware have been triggered");
   try {
     const accessToken = req.cookies["accessToken"];
     if (!accessToken) throw new Error("Access token cookie missing");
 
     const { userId } = verifyAccessToken(accessToken) as JwtPayload;
     const user = await findUserById(userId);
+    if (!user) throw new Error("User not found");
+    if (!user.is_confirmed) {
+      res.send("User is not confirmed. Please, confirm registration via email");
+      return;
+    }
     const expires = new Date();
     expires.setMinutes(expires.getMinutes() + 15);
     res.cookie("user", user, {
@@ -51,6 +55,7 @@ export async function authMiddleware(
       }
     } else {
       console.log((error as Error).message);
+      res.send((error as Error).message);
     }
   }
 }

@@ -1,5 +1,5 @@
 import { db } from "./database";
-import { UserUpdate, NewUser, User } from "./types/types";
+import { UserUpdate, NewUser, User } from "./types";
 
 export async function createUser(user: NewUser) {
   return await db
